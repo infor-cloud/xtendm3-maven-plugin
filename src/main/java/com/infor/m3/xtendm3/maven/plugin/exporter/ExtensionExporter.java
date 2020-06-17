@@ -61,7 +61,7 @@ public class ExtensionExporter {
       logger.get().info(String.format("writing %s", file.getPath()));
       write(file, entry.getValue());
     }
-    String archiveName = parent + "-" + LocalDateTime.now().toString() + ".zip";
+    String archiveName = parent + ".zip";
     new ArchiveUtils(logger).zipDirectory(Paths.get(target, archiveName).toString(), Paths.get(target, parent).toString());
   }
 
