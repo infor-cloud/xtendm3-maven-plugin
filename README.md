@@ -16,12 +16,14 @@ Add the plugin to your `pom.xml` file in the plugins section similar to below to
         <version>0.1.2</version>
         <executions>
           <execution>
+            <id>lint</id>
             <phase>compile</phase>
             <goals>
               <goal>lint</goal>
             </goals>
           </execution>
           <execution>
+            <id>export</id>
             <phase>package</phase>
             <goals>
               <goal>export</goal>
