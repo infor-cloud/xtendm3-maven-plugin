@@ -6,6 +6,7 @@ import com.infor.m3.xtendm3.maven.plugin.model.type.ExtensionType;
 import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.File;
+import java.util.Optional;
 
 public interface ExtensionFactory {
   String DEFAULT_CREATOR = "XTENDM3DEV";
@@ -13,7 +14,13 @@ public interface ExtensionFactory {
   String DEFAULT_BE_VERSION = "";
 
   static ExtensionFactory getInstance(ExtensionType type) {
-    return new TriggerExtensionFactory();
+    if (type.equals(ExtensionType.TRANSACTION)) {
+      return new TransactionExtensionFactory();
+    } else if (type.equals(ExtensionType.TRIGGER)) {
+      return new TriggerExtensionFactory();
+    } else {
+      return null;
+    }
   }
 
   Extension create(BaseExtensionMetadata extensionMetadata, File extension) throws MojoFailureException;

@@ -1,16 +1,16 @@
 package com.infor.m3.xtendm3.maven.plugin.util;
 
-import com.infor.m3.xtendm3.maven.plugin.model.entity.ApiMetadata;
-import com.infor.m3.xtendm3.maven.plugin.model.entity.TriggerExtensionMetadata;
-import com.infor.m3.xtendm3.maven.plugin.model.entity.UtilityMetadata;
-import com.infor.m3.xtendm3.maven.plugin.model.entity.XtendM3Metadata;
+import com.infor.m3.xtendm3.maven.plugin.model.entity.*;
 import com.infor.m3.xtendm3.maven.plugin.model.type.ErrorCode;
 import com.infor.m3.xtendm3.maven.plugin.model.type.ExtensionType;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class ExtensionSourceUtils {
   public ExtensionType resolveExtensionType(JavaClassSource source) throws MojoFailureException {
@@ -27,6 +27,21 @@ public class ExtensionSourceUtils {
     for (TriggerExtensionMetadata triggerExtensionMetadata : metadata.getExtensions()) {
       if (triggerExtensionMetadata.getName().equals(extensionName)) {
         return triggerExtensionMetadata;
+      }
+    }
+    AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "extension", extensionName);
+    throw new MojoFailureException("Code will not reach here");
+  }
+
+  public TransactionExtensionMetadata getTransactionExtensionMetadata(XtendM3Metadata metadata, String extensionName) throws MojoFailureException {
+    extensionName = extensionName.endsWith(".groovy") ? extensionName.substring(0, extensionName.indexOf(".groovy")) : extensionName;
+    List<ApiMetadata> apisMetadata = metadata.getApis();
+    for (ApiMetadata apiMetadata : apisMetadata) {
+      for (TransactionExtensionMetadata transactionExtensionMetadata : apiMetadata.getTransactions()) {
+        if (transactionExtensionMetadata.getName().equals(extensionName)) {
+          transactionExtensionMetadata.setProgram(apiMetadata.getName());
+          return transactionExtensionMetadata;
+        }
       }
     }
     AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "extension", extensionName);

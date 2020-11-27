@@ -2,6 +2,7 @@ package com.infor.m3.xtendm3.maven.plugin.model.internal;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Singular;
 
 import java.util.List;
 import java.util.Set;
@@ -19,5 +20,5 @@ public class ExtMITransaction {
   private String modifiedBy;
   private List<ExtMIField> outputFields;
   private List<ExtMIField> inputFields;
-  private Set<String> utilities;
+  @Singular private Set<String> utilities;
 }

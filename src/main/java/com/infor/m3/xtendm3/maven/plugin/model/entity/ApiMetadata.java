@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class ApiMetadata extends BaseExtensionMetadata {
   private String name;
-  private List<TransactionMetadata> transactions;
+  private List<TransactionExtensionMetadata> transactions;
 }

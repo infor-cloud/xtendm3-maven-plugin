@@ -3,6 +3,7 @@ package com.infor.m3.xtendm3.maven.plugin.exporter;
 import com.google.gson.Gson;
 import com.infor.m3.xtendm3.maven.plugin.AbstractXtendM3Mojo;
 import com.infor.m3.xtendm3.maven.plugin.exporter.transformer.ExtensionFactory;
+import com.infor.m3.xtendm3.maven.plugin.model.entity.TransactionExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.TriggerExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.XtendM3Metadata;
 import com.infor.m3.xtendm3.maven.plugin.model.internal.Extension;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,10 +44,21 @@ public class ExtensionExporter {
     logger.get().info(String.format("Found %d extensions to export", extensions.size()));
     Map<String, Extension> toExport = new HashMap<>();
     for (File extension : extensions) {
-      TriggerExtensionMetadata triggerExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getExtensionMetadata(metadata, extension.getName());
-      ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.TRIGGER);
-      Extension ex = factory.create(triggerExtensionMetadata, extension);
-      toExport.put(triggerExtensionMetadata.getName(), ex);
+      if (metadata.getExtensions() != null) {
+        TriggerExtensionMetadata triggerExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getExtensionMetadata(metadata, extension.getName());
+        ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.TRIGGER);
+        if (factory != null) {
+          Extension ex = factory.create(triggerExtensionMetadata, extension);
+          toExport.put(triggerExtensionMetadata.getName(), ex);
+        }
+      } else if (metadata.getApis() != null) {
+        TransactionExtensionMetadata transactionExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getTransactionExtensionMetadata(metadata, extension.getName());
+        ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.TRANSACTION);
+        if (factory != null) {
+          Extension ex = factory.create(transactionExtensionMetadata, extension);
+          toExport.put(transactionExtensionMetadata.getName(), ex);
+        }
+      }
     }
     doExport(toExport);
   }
