@@ -4,13 +4,11 @@ import com.infor.m3.xtendm3.maven.plugin.model.entity.*;
 import com.infor.m3.xtendm3.maven.plugin.model.type.ErrorCode;
 import com.infor.m3.xtendm3.maven.plugin.model.type.ExtensionType;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 public class ExtensionSourceUtils {
   public ExtensionType resolveExtensionType(JavaClassSource source) throws MojoFailureException {

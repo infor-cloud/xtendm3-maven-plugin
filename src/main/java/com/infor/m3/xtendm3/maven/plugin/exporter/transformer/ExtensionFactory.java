@@ -6,7 +6,6 @@ import com.infor.m3.xtendm3.maven.plugin.model.type.ExtensionType;
 import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.File;
-import java.util.Optional;
 
 public interface ExtensionFactory {
   String DEFAULT_CREATOR = "XTENDM3DEV";
