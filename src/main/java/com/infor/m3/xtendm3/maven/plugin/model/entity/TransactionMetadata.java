@@ -6,11 +6,15 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TransactionMetadata {
+public class TransactionMetadata extends  BaseExtensionMetadata{
   private String name;
   private String program;
   private String description;
   private TransactionType type;
   private List<TransactionFieldMetadata> inputs;
   private List<TransactionFieldMetadata> outputs;
+
+  public  TransactionMetadata(){
+    super.setExtensionType(ExtensionType.TRANSACTION);
+  }
 }

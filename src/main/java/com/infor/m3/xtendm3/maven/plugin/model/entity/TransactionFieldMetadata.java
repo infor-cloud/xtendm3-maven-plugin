@@ -7,7 +7,13 @@ import lombok.Data;
 public class TransactionFieldMetadata {
   private String name;
   private String description;
-  private Long length;
+  private int length;
   private Boolean mandatory;
   private TransactionFieldType type;
+  public Character getFieldType() {
+    if (type == TransactionFieldType.NUMERIC){
+      return 'N';
+    }
+    return 'A';
+  }
 }

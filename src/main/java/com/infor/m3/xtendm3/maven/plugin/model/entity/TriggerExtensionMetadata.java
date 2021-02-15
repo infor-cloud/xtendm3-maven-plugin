@@ -6,8 +6,12 @@ import java.util.List;
 
 @Data
 public class TriggerExtensionMetadata extends BaseExtensionMetadata {
-  private String name;
+
   private List<TriggerMetadata> triggers;
   private List<String> utilities;
   private Integer priority;
+
+  public  TriggerExtensionMetadata(){
+    super.setExtensionType(ExtensionType.TRIGGER);
+  }
 }
