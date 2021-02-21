@@ -10,5 +10,5 @@ public class ExtMIField {
   private String description;
   private Integer length;
   private Boolean mandatory;
-  private Character type;
+  private String type;
 }
