@@ -1,9 +1,6 @@
 package com.infor.m3.xtendm3.maven.plugin.util;
 
-import com.infor.m3.xtendm3.maven.plugin.model.entity.ApiMetadata;
-import com.infor.m3.xtendm3.maven.plugin.model.entity.TriggerExtensionMetadata;
-import com.infor.m3.xtendm3.maven.plugin.model.entity.UtilityMetadata;
-import com.infor.m3.xtendm3.maven.plugin.model.entity.XtendM3Metadata;
+import com.infor.m3.xtendm3.maven.plugin.model.entity.*;
 import com.infor.m3.xtendm3.maven.plugin.model.type.ErrorCode;
 import com.infor.m3.xtendm3.maven.plugin.model.type.ExtensionType;
 import org.apache.maven.plugin.MojoFailureException;
@@ -16,27 +13,45 @@ public class ExtensionSourceUtils {
   public ExtensionType resolveExtensionType(JavaClassSource source) throws MojoFailureException {
     String superType = source.getSuperType();
     Optional<ExtensionType> type = ExtensionType.resolveByType(superType);
-    if (!type.isPresent()) {
-      AssertionUtils.getInstance().fail(ErrorCode.CODE_FORBIDDEN_SUPERTYPE, superType, ExtensionType.getSuperTypes());
+    if (type.isPresent()) {
+      return type.get();
+
     }
-    return type.get();
+    AssertionUtils.getInstance().fail(ErrorCode.CODE_FORBIDDEN_SUPERTYPE, superType, ExtensionType.getSuperTypes());
+    throw new MojoFailureException("Code will not reach here");
   }
 
-  public TriggerExtensionMetadata getExtensionMetadata(XtendM3Metadata metadata, String extensionName) throws MojoFailureException {
+  public BaseExtensionMetadata getExtensionMetadata(XtendM3Metadata metadata, String extensionName) throws MojoFailureException {
     extensionName = extensionName.endsWith(".groovy") ? extensionName.substring(0, extensionName.indexOf(".groovy")) : extensionName;
-    for (TriggerExtensionMetadata triggerExtensionMetadata : metadata.getExtensions()) {
-      if (triggerExtensionMetadata.getName().equals(extensionName)) {
-        return triggerExtensionMetadata;
+    if (metadata.getExtensions() != null) {
+      for (TriggerExtensionMetadata triggerExtensionMetadata : metadata.getExtensions()) {
+        if (triggerExtensionMetadata.getName().equals(extensionName)) {
+          return triggerExtensionMetadata;
+        }
+      }
+    }
+
+    if (metadata.getApis()!=null){
+      for (ApiMetadata apiMetadata : metadata.getApis()) {
+        if (apiMetadata.getTransactions() != null) {
+          for(TransactionMetadata transactionMetadata : apiMetadata.getTransactions())
+          if (transactionMetadata.getName().equals(extensionName)) {
+            return transactionMetadata;
+          }
+        }
       }
     }
     AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "extension", extensionName);
     throw new MojoFailureException("Code will not reach here");
   }
 
-  public ApiMetadata getApiMetadata(XtendM3Metadata metadata, String apiName) throws MojoFailureException {
+  public TransactionMetadata getTransactionMetadata(XtendM3Metadata metadata, String apiName) throws MojoFailureException {
     for (ApiMetadata apiMetadata : metadata.getApis()) {
-      if (apiMetadata.getName().equals(apiName)) {
-        return apiMetadata;
+      if (apiMetadata.getTransactions() != null) {
+        for(TransactionMetadata transactionMetadata : apiMetadata.getTransactions())
+          if (transactionMetadata.getName().equals(apiName)) {
+            return transactionMetadata;
+          }
       }
     }
     AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "API", apiName);

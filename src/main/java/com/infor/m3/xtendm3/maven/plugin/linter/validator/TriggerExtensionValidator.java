@@ -33,7 +33,7 @@ public class TriggerExtensionValidator extends AbstractExtensionValidator {
   @Override
   protected void validateMetadata(XtendM3Metadata metadata, JavaClassSource source) throws MojoFailureException {
     logger.get().info(String.format("Validating metadata for extension %s", source.getName()));
-    TriggerExtensionMetadata triggerExtensionMetadata = extensionSourceUtils.getExtensionMetadata(metadata, source.getName());
+    TriggerExtensionMetadata triggerExtensionMetadata = (TriggerExtensionMetadata) extensionSourceUtils.getExtensionMetadata(metadata, source.getName());
     List<TriggerMetadata> triggerMetadata = triggerExtensionMetadata.getTriggers();
     if (triggerMetadata.isEmpty()) {
       AssertionUtils.getInstance().fail(ErrorCode.METADATA_TRIGGER_MISSING, triggerExtensionMetadata.getName());
@@ -58,7 +58,7 @@ public class TriggerExtensionValidator extends AbstractExtensionValidator {
   @Override
   protected void validateMemberFields(XtendM3Metadata metadata, JavaClassSource source) throws MojoFailureException {
     logger.get().info(String.format("Validating member fields for extension %s", source.getName()));
-    TriggerExtensionMetadata triggerExtensionMetadata = extensionSourceUtils.getExtensionMetadata(metadata, source.getName());
+    TriggerExtensionMetadata triggerExtensionMetadata = (TriggerExtensionMetadata) extensionSourceUtils.getExtensionMetadata(metadata, source.getName());
     List<TriggerMetadata> triggerMetadata = triggerExtensionMetadata.getTriggers();
     TriggerMetadata trigger = triggerMetadata.get(0);
     ProgramType programType = trigger.getProgramType();
@@ -82,7 +82,7 @@ public class TriggerExtensionValidator extends AbstractExtensionValidator {
     if (!constructor.isPresent()) {
       return;
     }
-    TriggerExtensionMetadata triggerExtensionMetadata = extensionSourceUtils.getExtensionMetadata(metadata, source.getName());
+    TriggerExtensionMetadata triggerExtensionMetadata = (TriggerExtensionMetadata) extensionSourceUtils.getExtensionMetadata(metadata, source.getName());
     List<TriggerMetadata> triggerMetadata = triggerExtensionMetadata.getTriggers();
     TriggerMetadata trigger = triggerMetadata.get(0);
     ProgramType programType = trigger.getProgramType();

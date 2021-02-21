@@ -3,6 +3,7 @@ package com.infor.m3.xtendm3.maven.plugin.exporter;
 import com.google.gson.Gson;
 import com.infor.m3.xtendm3.maven.plugin.AbstractXtendM3Mojo;
 import com.infor.m3.xtendm3.maven.plugin.exporter.transformer.ExtensionFactory;
+import com.infor.m3.xtendm3.maven.plugin.model.entity.BaseExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.TriggerExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.XtendM3Metadata;
 import com.infor.m3.xtendm3.maven.plugin.model.internal.Extension;
@@ -43,10 +44,10 @@ public class ExtensionExporter {
     logger.get().info(String.format("Found %d extensions to export", extensions.size()));
     Map<String, Extension> toExport = new HashMap<>();
     for (File extension : extensions) {
-      TriggerExtensionMetadata triggerExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getExtensionMetadata(metadata, extension.getName());
-      ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.TRIGGER);
-      Extension ex = factory.create(triggerExtensionMetadata, extension);
-      toExport.put(triggerExtensionMetadata.getName(), ex);
+      BaseExtensionMetadata extensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getExtensionMetadata(metadata, extension.getName());
+      ExtensionFactory factory = ExtensionFactory.getInstance(extensionMetadata.ExtensionType);
+      Extension ex = factory.create(extensionMetadata, extension);
+      toExport.put(extensionMetadata.getName(), ex);
     }
     doExport(toExport);
   }
