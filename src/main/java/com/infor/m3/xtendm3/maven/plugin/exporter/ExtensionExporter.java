@@ -3,6 +3,7 @@ package com.infor.m3.xtendm3.maven.plugin.exporter;
 import com.google.gson.Gson;
 import com.infor.m3.xtendm3.maven.plugin.AbstractXtendM3Mojo;
 import com.infor.m3.xtendm3.maven.plugin.exporter.transformer.ExtensionFactory;
+import com.infor.m3.xtendm3.maven.plugin.model.entity.ApiMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.TransactionExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.TriggerExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.XtendM3Metadata;
@@ -42,20 +43,35 @@ public class ExtensionExporter {
     List<File> extensions = abstractXtendM3Mojo.getExtensions();
     logger.get().info(String.format("Found %d extensions to export", extensions.size()));
     Map<String, Extension> toExport = new HashMap<>();
-    for (File extension : extensions) {
-      if (metadata.getExtensions() != null) {
-        TriggerExtensionMetadata triggerExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getExtensionMetadata(metadata, extension.getName());
-        ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.TRIGGER);
-        if (factory != null) {
-          Extension ex = factory.create(triggerExtensionMetadata, extension);
-          toExport.put(triggerExtensionMetadata.getName(), ex);
+    if (metadata.getExtensions() != null) {
+      for (TriggerExtensionMetadata triggerExtension : metadata.getExtensions()) {
+        for (File extension : extensions) {
+          if (triggerExtension.getName().equals(extension.getName().substring(0, extension.getName().indexOf('.')))) {
+            TriggerExtensionMetadata triggerExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getExtensionMetadata(metadata, extension.getName());
+            ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.TRIGGER);
+            if (factory != null) {
+              Extension ex = factory.create(triggerExtensionMetadata, extension);
+              toExport.put(triggerExtensionMetadata.getName(), ex);
+            }
+            break;
+          }
         }
-      } else if (metadata.getApis() != null) {
-        TransactionExtensionMetadata transactionExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getTransactionExtensionMetadata(metadata, extension.getName());
-        ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.TRANSACTION);
-        if (factory != null) {
-          Extension ex = factory.create(transactionExtensionMetadata, extension);
-          toExport.put(transactionExtensionMetadata.getName(), ex);
+      }
+    }
+    if (metadata.getApis() != null) {
+      for (ApiMetadata apiMetadata : metadata.getApis()) {
+        for (TransactionExtensionMetadata transactionExtension : apiMetadata.getTransactions()) {
+          for (File extension : extensions) {
+            if (transactionExtension.getName().equals(extension.getName().substring(0, extension.getName().indexOf('.')))) {
+              TransactionExtensionMetadata transactionExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getTransactionExtensionMetadata(metadata, extension.getName());
+              ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.TRANSACTION);
+              if (factory != null) {
+                Extension ex = factory.create(transactionExtensionMetadata, extension);
+                toExport.put(transactionExtensionMetadata.getName(), ex);
+              }
+              break;
+            }
+          }
         }
       }
     }
