@@ -7,7 +7,7 @@ import lombok.Data;
 public class TransactionFieldMetadata {
   private String name;
   private String description;
-  private Long length;
-  private Boolean mandatory;
+  private Integer length;
+  private Boolean mandatory = false;
   private TransactionFieldType type;
 }
