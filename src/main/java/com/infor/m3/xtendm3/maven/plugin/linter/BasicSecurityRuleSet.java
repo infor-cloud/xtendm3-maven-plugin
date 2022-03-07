@@ -71,6 +71,7 @@ public class BasicSecurityRuleSet {
     whiteListedPackages.add("groovy.xml.");
     whiteListedPackages.add("groovy.json.");
     whiteListedPackages.add("groovy.util.slurpersupport.");
+    whiteListedPackages.add("java.time.LocalDate");
     return whiteListedPackages;
   }
 

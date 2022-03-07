@@ -72,7 +72,7 @@ public abstract class AbstractExtensionValidator {
 
   private void validateImport(Import anImport, JavaClassSource source) throws MojoFailureException {
     for (String wp : securityRuleSet.getWhiteListedPackages()) {
-      if (anImport.getPackage().startsWith(wp)) {
+      if (wp.startsWith(anImport.getPackage())) {
         return;
       }
     }
