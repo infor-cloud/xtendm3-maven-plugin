@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public enum ExtensionType {
-  TRIGGER("ExtendM3Trigger"), TRANSACTION("ExtendM3Transaction"), UTILITY("ExtendM3Utility");
+  TRIGGER("ExtendM3Trigger"), TRANSACTION("ExtendM3Transaction"), UTILITY("ExtendM3Utility"), BATCH("ExtendM3Batch");
 
   private final String superType;
 
