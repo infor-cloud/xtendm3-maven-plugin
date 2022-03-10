@@ -6,6 +6,7 @@ import com.infor.m3.xtendm3.maven.plugin.exporter.transformer.ExtensionFactory;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.ApiMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.TransactionExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.TriggerExtensionMetadata;
+import com.infor.m3.xtendm3.maven.plugin.model.entity.BatchExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.XtendM3Metadata;
 import com.infor.m3.xtendm3.maven.plugin.model.internal.Extension;
 import com.infor.m3.xtendm3.maven.plugin.model.type.ErrorCode;
@@ -71,6 +72,21 @@ public class ExtensionExporter {
               }
               break;
             }
+          }
+        }
+      }
+    }
+    if (metadata.getBatches() != null) {
+      for (BatchExtensionMetadata batchExtension : metadata.getBatches()) {
+        for (File extension : extensions) {
+          if (batchExtension.getName().equals(extension.getName().substring(0, extension.getName().indexOf('.')))) {
+            BatchExtensionMetadata batchExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getBatchExtensionMetadata(metadata, extension.getName());
+            ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.BATCH);
+            if (factory != null) {
+              Extension ex = factory.create(batchExtensionMetadata, extension);
+              toExport.put(batchExtensionMetadata.getName(), ex);
+            }
+            break;
           }
         }
       }
