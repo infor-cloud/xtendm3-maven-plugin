@@ -49,9 +49,11 @@ public class ExtensionExporter {
         for (File extension : extensions) {
           if (triggerExtension.getName().equals(extension.getName().substring(0, extension.getName().indexOf('.')))) {
             TriggerExtensionMetadata triggerExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getExtensionMetadata(metadata, extension.getName());
+            logger.get().info(String.format("Adding extension: %s to factory", extension));
             ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.TRIGGER);
             if (factory != null) {
               Extension ex = factory.create(triggerExtensionMetadata, extension);
+              logger.get().info(String.format("Adding extension: %s to export", extension));
               toExport.put(triggerExtensionMetadata.getName(), ex);
             }
             break;
@@ -65,9 +67,11 @@ public class ExtensionExporter {
           for (File extension : extensions) {
             if (transactionExtension.getName().equals(extension.getName().substring(0, extension.getName().indexOf('.')))) {
               TransactionExtensionMetadata transactionExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getTransactionExtensionMetadata(metadata, extension.getName());
+              logger.get().info(String.format("Adding extension: %s to factory", extension));
               ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.TRANSACTION);
               if (factory != null) {
                 Extension ex = factory.create(transactionExtensionMetadata, extension);
+                logger.get().info(String.format("Adding extension: %s to export", extension));
                 toExport.put(transactionExtensionMetadata.getName(), ex);
               }
               break;
@@ -81,9 +85,11 @@ public class ExtensionExporter {
         for (File extension : extensions) {
           if (batchExtension.getName().equals(extension.getName().substring(0, extension.getName().indexOf('.')))) {
             BatchExtensionMetadata batchExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getBatchExtensionMetadata(metadata, extension.getName());
+            logger.get().info(String.format("Adding extension: %s to factory", extension));
             ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.BATCH);
             if (factory != null) {
               Extension ex = factory.create(batchExtensionMetadata, extension);
+              logger.get().info(String.format("Adding extension: %s to export", extension));
               toExport.put(batchExtensionMetadata.getName(), ex);
             }
             break;

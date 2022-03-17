@@ -17,6 +17,8 @@ public interface ExtensionFactory {
       return new TransactionExtensionFactory();
     } else if (type.equals(ExtensionType.TRIGGER)) {
       return new TriggerExtensionFactory();
+    }  else if (type.equals(ExtensionType.BATCH)) {
+      return new BatchExtensionFactory();
     } else {
       return null;
     }

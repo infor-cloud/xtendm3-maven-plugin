@@ -35,6 +35,9 @@ public abstract class AbstractExtensionValidator {
     if (extensionType == ExtensionType.UTILITY) {
       return new UtilityExtensionValidator(logger);
     }
+    if (extensionType == ExtensionType.BATCH) {
+      return new BatchExtensionValidator(logger);
+    }
     AssertionUtils.getInstance().fail(ErrorCode.CODE_UNHANDLED_EXTENSION_TYPE_ERROR, extensionType);
     throw new MojoFailureException("Code will not reach here");
   }

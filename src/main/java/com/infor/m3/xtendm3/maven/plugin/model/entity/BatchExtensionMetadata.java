@@ -7,6 +7,7 @@ import java.util.List;
 @Data
 public class BatchExtensionMetadata extends BaseExtensionMetadata {
   private String name;
+  private String description;
   private List<String> utilities;
   private List<BatchMetadata> batches;
 }

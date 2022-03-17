@@ -10,6 +10,7 @@ import java.util.Set;
 @Builder
 public class Batch {
   private String name;
+  private String description;
   private Boolean active;
   private Long modified;
   private String modifiedBy;

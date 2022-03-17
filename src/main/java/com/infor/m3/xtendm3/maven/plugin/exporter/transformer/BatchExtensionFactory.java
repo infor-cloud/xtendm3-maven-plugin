@@ -53,6 +53,7 @@ class BatchExtensionFactory implements ExtensionFactory {
     //BatchMetadata batchMetadata = metadata.getBatches().get(0);
     return Batch.builder()
       .name(metadata.getName())
+      .description(metadata.getDescription())
       .active(false)
       .modified(Instant.now().toEpochMilli())
       .modifiedBy(DEFAULT_UPDATER)
