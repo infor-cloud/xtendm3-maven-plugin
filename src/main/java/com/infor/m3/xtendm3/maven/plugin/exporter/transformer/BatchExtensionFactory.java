@@ -27,7 +27,7 @@ class BatchExtensionFactory implements ExtensionFactory {
     BatchExtensionMetadata metadata = (BatchExtensionMetadata) extensionMetadata;
     Source source = buildSource(extension);
     Batch batch = buildBatch(metadata, source);
-    ProgramModule programModule = buildProgramModule(metadata, batch);
+    ProgramModule programModule = buildProgramModule(batch);
     return buildExtension(Collections.singletonList(programModule), Collections.singletonList(source));
   }
 
@@ -50,7 +50,6 @@ class BatchExtensionFactory implements ExtensionFactory {
   }
 
   private Batch buildBatch(BatchExtensionMetadata metadata, Source source) {
-    //BatchMetadata batchMetadata = metadata.getBatches().get(0);
     return Batch.builder()
       .name(metadata.getName())
       .description(metadata.getDescription())
@@ -62,8 +61,7 @@ class BatchExtensionFactory implements ExtensionFactory {
       .build();
   }
 
-  private ProgramModule buildProgramModule(BatchExtensionMetadata metadata, Batch batch) {
-    //Batch
+  private ProgramModule buildProgramModule(Batch batch) {
     return ProgramModule.builder()
       .program("")
       .transactions(Collections.emptyMap())

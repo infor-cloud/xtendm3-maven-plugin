@@ -48,7 +48,7 @@ public class ExtensionSourceUtils {
 
   public BatchExtensionMetadata getBatchExtensionMetadata(XtendM3Metadata metadata, String extensionName) throws MojoFailureException {
     extensionName = extensionName.endsWith(".groovy") ? extensionName.substring(0, extensionName.indexOf(".groovy")) : extensionName;
-    for (BatchExtensionMetadata batchExtensionMetadata : metadata.getBatches()) {
+    for (BatchExtensionMetadata batchExtensionMetadata : metadata.getBatchPrograms()) {
       if (batchExtensionMetadata.getName().equals(extensionName)) {
         return batchExtensionMetadata;
       }

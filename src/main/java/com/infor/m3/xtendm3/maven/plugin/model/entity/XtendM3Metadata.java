@@ -10,5 +10,5 @@ public class XtendM3Metadata extends BaseExtensionMetadata {
   private List<TriggerExtensionMetadata> extensions;
   private List<ApiMetadata> apis;
   private List<UtilityMetadata> utilities;
-  private List<BatchExtensionMetadata> batches;
+  private List<BatchExtensionMetadata> batchPrograms;
 }
