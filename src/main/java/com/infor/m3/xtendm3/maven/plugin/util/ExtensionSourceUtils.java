@@ -46,6 +46,17 @@ public class ExtensionSourceUtils {
     throw new MojoFailureException("Code will not reach here");
   }
 
+  public BatchExtensionMetadata getBatchExtensionMetadata(XtendM3Metadata metadata, String extensionName) throws MojoFailureException {
+    extensionName = extensionName.endsWith(".groovy") ? extensionName.substring(0, extensionName.indexOf(".groovy")) : extensionName;
+    for (BatchExtensionMetadata batchExtensionMetadata : metadata.getBatchPrograms()) {
+      if (batchExtensionMetadata.getName().equals(extensionName)) {
+        return batchExtensionMetadata;
+      }
+    }
+    AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "extension", extensionName);
+    throw new MojoFailureException("Code will not reach here");
+  }
+
   public ApiMetadata getApiMetadata(XtendM3Metadata metadata, String apiName) throws MojoFailureException {
     for (ApiMetadata apiMetadata : metadata.getApis()) {
       if (apiMetadata.getName().equals(apiName)) {

@@ -12,4 +12,5 @@ public class ProgramModule {
   private String program;
   @Singular private Map<String, Trigger> triggers;
   @Singular private Map<String, ExtMITransaction> transactions;
+  @Singular private Map<String, Batch> batches;
 }
