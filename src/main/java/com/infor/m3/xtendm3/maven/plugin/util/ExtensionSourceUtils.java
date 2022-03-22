@@ -53,7 +53,7 @@ public class ExtensionSourceUtils {
         return batchExtensionMetadata;
       }
     }
-    AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "extension", extensionName);
+    AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "batch", extensionName);
     throw new MojoFailureException("Code will not reach here");
   }
 
@@ -67,15 +67,28 @@ public class ExtensionSourceUtils {
     throw new MojoFailureException("Code will not reach here");
   }
 
-  public UtilityMetadata getUtilityMetadata(XtendM3Metadata metadata, String utilityName) throws MojoFailureException {
-    for (UtilityMetadata utilityMetadata : metadata.getUtilities()) {
-      if (utilityMetadata.getName().equals(utilityName)) {
-        return utilityMetadata;
+  public UtilityExtensionMetadata getUtilityExtensionMetadata(XtendM3Metadata metadata, String extensionName) throws MojoFailureException {
+    extensionName = extensionName.endsWith(".groovy") ? extensionName.substring(0, extensionName.indexOf(".groovy")) : extensionName;
+    for (UtilityExtensionMetadata utilityExtensionMetadata : metadata.getUtilityPrograms()) {
+      if (utilityExtensionMetadata.getName().equals(extensionName)) {
+        return utilityExtensionMetadata;
       }
     }
-    AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "utility", utilityName);
+    AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "utility", extensionName);
     throw new MojoFailureException("Code will not reach here");
   }
+
+  //public UtilityMetadata getUtilityMetadata(XtendM3Metadata metadata, String utilityName) throws MojoFailureException {
+  //  for (UtilityMetadata utilityMetadata : metadata.getUtilities) {
+  //    if (utilityMetadata.getName().equals(utilityName)) {
+  //      return utilityMetadata;
+  //    }
+  //  }
+  //  AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "utility", utilityName);
+  //  throw new MojoFailureException("Code will not reach here");
+  //}
+
+
 
   public Optional<MethodSource<JavaClassSource>> getConstructor(JavaClassSource source) {
     for (MethodSource<JavaClassSource> method : source.getMethods()) {

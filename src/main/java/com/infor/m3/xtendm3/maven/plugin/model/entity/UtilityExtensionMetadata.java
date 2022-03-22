@@ -4,6 +4,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class UtilityMetadata {
+public class UtilityExtensionMetadata extends BaseExtensionMetadata {
   private String name;
+  private List<UtilityMetadata> utilities;
 }

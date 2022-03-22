@@ -7,6 +7,7 @@ import com.infor.m3.xtendm3.maven.plugin.model.entity.ApiMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.TransactionExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.TriggerExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.BatchExtensionMetadata;
+import com.infor.m3.xtendm3.maven.plugin.model.entity.UtilityExtensionMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.entity.XtendM3Metadata;
 import com.infor.m3.xtendm3.maven.plugin.model.internal.Extension;
 import com.infor.m3.xtendm3.maven.plugin.model.type.ErrorCode;
@@ -85,6 +86,21 @@ public class ExtensionExporter {
             if (factory != null) {
               Extension ex = factory.create(batchExtensionMetadata, extension);
               toExport.put(batchExtensionMetadata.getName(), ex);
+            }
+            break;
+          }
+        }
+      }
+    }
+    if (metadata.getUtilityPrograms() != null) {
+      for (UtilityExtensionMetadata utilityExtension : metadata.getUtilityPrograms()) {
+        for (File extension : extensions) {
+          if (utilityExtension.getName().equals(extension.getName().substring(0, extension.getName().indexOf('.')))) {
+            UtilityExtensionMetadata utilityExtensionMetadata = abstractXtendM3Mojo.getExtensionSourceUtils().getUtilityExtensionMetadata(metadata, extension.getName());
+            ExtensionFactory factory = ExtensionFactory.getInstance(ExtensionType.UTILITY);
+            if (factory != null) {
+              Extension ex = factory.create(utilityExtensionMetadata, extension);
+              toExport.put(utilityExtensionMetadata.getName(), ex);
             }
             break;
           }

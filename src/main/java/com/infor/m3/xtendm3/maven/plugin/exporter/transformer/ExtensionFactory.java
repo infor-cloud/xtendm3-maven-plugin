@@ -19,6 +19,8 @@ public interface ExtensionFactory {
       return new TriggerExtensionFactory();
     }  else if (type.equals(ExtensionType.BATCH)) {
       return new BatchExtensionFactory();
+    } else if (type.equals(ExtensionType.UTILITY)) {
+      return new UtilityExtensionFactory();
     } else {
       return null;
     }
