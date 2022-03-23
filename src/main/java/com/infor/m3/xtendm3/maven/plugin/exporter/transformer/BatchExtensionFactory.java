@@ -34,13 +34,13 @@ class BatchExtensionFactory implements ExtensionFactory {
   private Source buildSource(File extension) throws MojoFailureException {
     try {
       return Source.builder()
-        .apiVersion(APIVersion.UNKNOWN)
-        .beVersion(DEFAULT_BE_VERSION)
+        .uuid(UUID.randomUUID().toString())
         .created(Instant.now().toEpochMilli())
         .updated(Instant.now().toEpochMilli())
         .createdBy(DEFAULT_CREATOR)
         .updatedBy(DEFAULT_UPDATER)
-        .uuid(UUID.randomUUID().toString())
+        .apiVersion(APIVersion.UNKNOWN)
+        .beVersion(DEFAULT_BE_VERSION)
         .code(Files.readAllBytes(extension.toPath()))
         .build();
     } catch (IOException e) {
@@ -51,19 +51,19 @@ class BatchExtensionFactory implements ExtensionFactory {
 
   private Batch buildBatch(BatchExtensionMetadata metadata, Source source) {
     return Batch.builder()
+      .sourceUuid(source.getUuid())
       .name(metadata.getName())
       .description(metadata.getDescription())
       .active(false)
       .modified(Instant.now().toEpochMilli())
       .modifiedBy(DEFAULT_UPDATER)
-      .sourceUuid(source.getUuid())
       .utilities(Collections.emptyList())
       .build();
   }
 
   private ProgramModule buildProgramModule(Batch batch) {
     return ProgramModule.builder()
-      .program("")
+      .program(batch.getName())
       .transactions(Collections.emptyMap())
       .triggers(Collections.emptyMap())
       .batches(Collections.singletonMap(batch.getName(), batch))
@@ -72,9 +72,9 @@ class BatchExtensionFactory implements ExtensionFactory {
 
   private Extension buildExtension(List<ProgramModule> programModules, List<Source> sources) {
     return Extension.builder()
-      .programModules(programModules.stream().collect(Collectors.toMap(ProgramModule::getProgram, module -> module)))
-      .sources(sources.stream().collect(Collectors.toMap(Source::getUuid, source -> source)))
       .utilities(Collections.emptyMap())
+      .sources(sources.stream().collect(Collectors.toMap(Source::getUuid, source -> source)))
+      .programModules(programModules.stream().collect(Collectors.toMap(ProgramModule::getProgram, module -> module)))
       .build();
   }
 }
