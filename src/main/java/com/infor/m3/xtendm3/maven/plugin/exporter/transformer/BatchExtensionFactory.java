@@ -63,7 +63,7 @@ class BatchExtensionFactory implements ExtensionFactory {
 
   private ProgramModule buildProgramModule(Batch batch) {
     return ProgramModule.builder()
-      .program("")
+      .program(batch.getName())
       .transactions(Collections.emptyMap())
       .triggers(Collections.emptyMap())
       .batches(Collections.singletonMap(batch.getName(), batch))
