@@ -64,13 +64,13 @@ public class BasicSecurityRuleSet {
 
   private Set<String> buildWhiteListedPackages() {
     Set<String> whiteListedPackages = new HashSet<>();
-    whiteListedPackages.add("java.math.");
-    whiteListedPackages.add("java.time.");
-    whiteListedPackages.add("java.text.");
-    whiteListedPackages.add("java.util.");
-    whiteListedPackages.add("groovy.xml.");
-    whiteListedPackages.add("groovy.json.");
-    whiteListedPackages.add("groovy.util.slurpersupport.");
+    whiteListedPackages.add("java.math");
+    whiteListedPackages.add("java.time");
+    whiteListedPackages.add("java.text");
+    whiteListedPackages.add("java.util");
+    whiteListedPackages.add("groovy.xml");
+    whiteListedPackages.add("groovy.json");
+    whiteListedPackages.add("groovy.util.slurpersupport");
     return whiteListedPackages;
   }
 
