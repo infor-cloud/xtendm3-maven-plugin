@@ -34,6 +34,9 @@ public class TransactionExtensionFactory implements ExtensionFactory {
 
   private List<ExtMIField> buildInputFields(List<TransactionFieldMetadata> inputFieldsMetadata) {
     List<ExtMIField> inputFields = new ArrayList<>();
+    if(inputFieldsMetadata == null || inputFieldsMetadata.isEmpty()) {
+      return inputFields;
+    }
     for (TransactionFieldMetadata fieldMetadata : inputFieldsMetadata) {
       inputFields.add(ExtMIField.builder()
         .name(fieldMetadata.getName())
@@ -48,6 +51,9 @@ public class TransactionExtensionFactory implements ExtensionFactory {
 
   private List<ExtMIField> buildOutputFields(List<TransactionFieldMetadata> outputFieldsMetadata) {
     List<ExtMIField> outputFields = new ArrayList<>();
+    if(outputFieldsMetadata == null || outputFieldsMetadata.isEmpty()) {
+      return outputFields;
+    }
     for (TransactionFieldMetadata fieldMetadata : outputFieldsMetadata) {
       outputFields.add(ExtMIField.builder()
         .name(fieldMetadata.getName())
