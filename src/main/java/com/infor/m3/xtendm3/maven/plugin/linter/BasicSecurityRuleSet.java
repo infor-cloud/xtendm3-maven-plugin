@@ -7,7 +7,9 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.security.SecureRandom;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class BasicSecurityRuleSet {
   private final Set<String> whiteListedPackages;
@@ -67,7 +69,10 @@ public class BasicSecurityRuleSet {
     whiteListedPackages.add("java.math");
     whiteListedPackages.add("java.time");
     whiteListedPackages.add("java.text");
-    whiteListedPackages.add("java.util");
+    whiteListedPackages.add("java.util.random");
+    whiteListedPackages.add("java.util.regex");
+    whiteListedPackages.add("java.util.stream");
+    whiteListedPackages.add("java.util.function");
     whiteListedPackages.add("groovy.xml");
     whiteListedPackages.add("groovy.json");
     whiteListedPackages.add("groovy.util.slurpersupport");
@@ -80,6 +85,26 @@ public class BasicSecurityRuleSet {
     whiteListedClasses.add(PrintWriter.class.getName());
     whiteListedClasses.add(Reader.class.getName());
     whiteListedClasses.add(BufferedReader.class.getName());
+    whiteListedClasses.add(SecureRandom.class.getName());
+    whiteListedClasses.add(StringBuilder.class.getName());
+    whiteListedClasses.add(String.class.getName());
+    whiteListedClasses.add(StrictMath.class.getName());
+    whiteListedClasses.add(Short.class.getName());
+    whiteListedClasses.add(Number.class.getName());
+    whiteListedClasses.add(Math.class.getName());
+    whiteListedClasses.add(Long.class.getName());
+    whiteListedClasses.add(Integer.class.getName());
+    whiteListedClasses.add(Float.class.getName());
+    whiteListedClasses.add(Enum.class.getName());
+    whiteListedClasses.add(Double.class.getName());
+    whiteListedClasses.add(Character.UnicodeBlock.class.getName());
+    whiteListedClasses.add(Character.Subset.class.getName());
+    whiteListedClasses.add(Character.class.getName());
+    whiteListedClasses.add(Byte.class.getName());
+    whiteListedClasses.add(Boolean.class.getName());
+    whiteListedClasses.add(AutoCloseable.class.getName());
+    whiteListedClasses.add(CharSequence.class.getName());
+    whiteListedClasses.add(TimeUnit.class.getName());
     return whiteListedClasses;
   }
 

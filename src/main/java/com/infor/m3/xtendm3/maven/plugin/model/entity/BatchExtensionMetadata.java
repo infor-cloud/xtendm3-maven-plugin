@@ -10,4 +10,5 @@ public class BatchExtensionMetadata extends BaseExtensionMetadata {
   private String description;
   private List<String> utilities;
   private List<BatchMetadata> batches;
+  private String market;
 }

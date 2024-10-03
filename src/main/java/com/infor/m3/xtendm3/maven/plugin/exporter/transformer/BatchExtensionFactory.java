@@ -58,6 +58,7 @@ class BatchExtensionFactory implements ExtensionFactory {
       .modifiedBy(DEFAULT_UPDATER)
       .sourceUuid(source.getUuid())
       .utilities(Collections.emptyList())
+      .market(metadata.getMarket())
       .build();
   }
 

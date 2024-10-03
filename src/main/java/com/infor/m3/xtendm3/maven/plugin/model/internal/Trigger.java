@@ -20,4 +20,5 @@ public class Trigger {
   private String programName;
   @Singular private Set<String> utilities;
   private Integer priority;
+  private String market;
 }

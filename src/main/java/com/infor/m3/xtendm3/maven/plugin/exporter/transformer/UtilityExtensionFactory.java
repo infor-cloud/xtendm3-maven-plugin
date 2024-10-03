@@ -1,12 +1,12 @@
 package com.infor.m3.xtendm3.maven.plugin.exporter.transformer;
 
 import com.infor.m3.xtendm3.maven.plugin.model.entity.BaseExtensionMetadata;
-import com.infor.m3.xtendm3.maven.plugin.model.entity.TriggerExtensionMetadata;
-import com.infor.m3.xtendm3.maven.plugin.model.entity.TriggerMetadata;
+import com.infor.m3.xtendm3.maven.plugin.model.entity.UtilityExtensionMetadata;
+import com.infor.m3.xtendm3.maven.plugin.model.entity.UtilityMetadata;
 import com.infor.m3.xtendm3.maven.plugin.model.internal.Extension;
 import com.infor.m3.xtendm3.maven.plugin.model.internal.ProgramModule;
 import com.infor.m3.xtendm3.maven.plugin.model.internal.Source;
-import com.infor.m3.xtendm3.maven.plugin.model.internal.Trigger;
+import com.infor.m3.xtendm3.maven.plugin.model.internal.Utility;
 import com.infor.m3.xtendm3.maven.plugin.model.type.APIVersion;
 import com.infor.m3.xtendm3.maven.plugin.model.type.ErrorCode;
 import com.infor.m3.xtendm3.maven.plugin.util.AssertionUtils;
@@ -21,17 +21,16 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-class TriggerExtensionFactory implements ExtensionFactory {
-
+class UtilityExtensionFactory implements ExtensionFactory {
+    
   @Override
   public Extension create(BaseExtensionMetadata extensionMetadata, File extension) throws MojoFailureException {
-    TriggerExtensionMetadata metadata = (TriggerExtensionMetadata) extensionMetadata;
+    UtilityExtensionMetadata metadata = (UtilityExtensionMetadata) extensionMetadata;
     Source source = buildSource(extension);
-    Trigger trigger = buildTrigger(metadata, source);
-    ProgramModule programModule = buildProgramModule(metadata, trigger);
-    return buildExtension(Collections.singletonList(programModule), Collections.singletonList(source));
-  }
-
+    Utility utility = buildUtility(metadata, source);
+    return buildExtension(Collections.singletonList(utility), Collections.singletonList(source));
+  }   
+  
   private Source buildSource(File extension) throws MojoFailureException {
     try {
       return Source.builder()
@@ -40,7 +39,7 @@ class TriggerExtensionFactory implements ExtensionFactory {
         .created(Instant.now().toEpochMilli())
         .updated(Instant.now().toEpochMilli())
         .createdBy(DEFAULT_CREATOR)
-        .updatedBy(DEFAULT_UPDATER)
+        .updatedBy(DEFAULT_CREATOR)
         .uuid(UUID.randomUUID().toString())
         .code(Files.readAllBytes(extension.toPath()))
         .build();
@@ -50,38 +49,18 @@ class TriggerExtensionFactory implements ExtensionFactory {
     throw new MojoFailureException("Code will not reach here");
   }
 
-  private Trigger buildTrigger(TriggerExtensionMetadata metadata, Source source) {
-    TriggerMetadata triggerMetadata = metadata.getTriggers().get(0);
-    return Trigger.builder()
+  private Utility buildUtility(UtilityExtensionMetadata metadata, Source source) {
+    return Utility.builder()
       .name(metadata.getName())
-      .advice(triggerMetadata.getAdvice())
-      .method(triggerMetadata.getMethod())
-      .priority(metadata.getPriority())
-      .active(false)
-      .modified(Instant.now().toEpochMilli())
-      .modifiedBy(DEFAULT_UPDATER)
       .sourceUuid(source.getUuid())
-      .programName(triggerMetadata.getProgram())
-      .utilities(Collections.emptyList())
-      .priority(metadata.getPriority())
-      .market(metadata.getMarket())
       .build();
   }
 
-  private ProgramModule buildProgramModule(TriggerExtensionMetadata metadata, Trigger trigger) {
-    TriggerMetadata triggerMetadata = metadata.getTriggers().get(0);
-    return ProgramModule.builder()
-      .program(triggerMetadata.getProgram())
-      .transactions(Collections.emptyMap())
-      .triggers(Collections.singletonMap(trigger.getName(), trigger))
-      .build();
-  }
-
-  private Extension buildExtension(List<ProgramModule> programModules, List<Source> sources) {
+  private Extension buildExtension(List<Utility> utilities, List<Source> sources) {
     return Extension.builder()
-      .programModules(programModules.stream().collect(Collectors.toMap(ProgramModule::getProgram, module -> module)))
+      .programModules(Collections.emptyMap())
+      .utilities(utilities.stream().collect(Collectors.toMap(Utility::getName, name -> name)))
       .sources(sources.stream().collect(Collectors.toMap(Source::getUuid, source -> source)))
-      .utilities(Collections.emptyMap())
       .build();
   }
 }

@@ -10,4 +10,5 @@ public class TriggerExtensionMetadata extends BaseExtensionMetadata {
   private List<TriggerMetadata> triggers;
   private List<String> utilities;
   private Integer priority;
+  private String market;
 }

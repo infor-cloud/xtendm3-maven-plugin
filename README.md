@@ -5,7 +5,7 @@
 
 ## Introduction
 This plugin adds support for linting extensions locally based on similar (though not identical and nor complete) security 
-rules, checks and constraints for XtendM3 also support exporting extensions to the format where they can be imported.
+rules, checks and constraints for XtendM3. Plugin also support exporting extensions to the format where they can be imported to an M3 environment.
 
 ## Usage
 Add the plugin to your `pom.xml` file in the plugins section similar to below to run the linter automatically on compile and packaging the project.
@@ -13,7 +13,7 @@ Add the plugin to your `pom.xml` file in the plugins section similar to below to
       <plugin>
         <groupId>com.infor.m3</groupId>
         <artifactId>xtendm3-maven-plugin</artifactId>
-        <version>0.1.2</version>
+        <version>0.1.10-SNAPSHOT</version>
         <executions>
           <execution>
             <id>lint</id>

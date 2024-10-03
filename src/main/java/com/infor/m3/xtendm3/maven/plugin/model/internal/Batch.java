@@ -17,4 +17,5 @@ public class Batch {
   private String sourceUuid;
   @Singular
   private Set<String> utilities;
+  private String market;
 }
