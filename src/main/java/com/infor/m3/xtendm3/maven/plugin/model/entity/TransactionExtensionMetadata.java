@@ -7,10 +7,11 @@ import java.util.List;
 
 @Data
 public class TransactionExtensionMetadata extends BaseExtensionMetadata {
-  private String program;
   private String name;
+  private String program;
   private String description;
   private TransactionType type;
   private List<TransactionFieldMetadata> inputs;
   private List<TransactionFieldMetadata> outputs;
+  private String market;
 }

@@ -5,7 +5,7 @@
   <groupId>com.infor.m3</groupId>
   <artifactId>xtendm3-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>0.1.9-SNAPSHOT</version>
+  <version>0.1.10-SNAPSHOT</version>
 
   <name>XtendM3 Maven Plugin</name>
   <description>XtendM3 Maven Plugin for linting and exporting XtendM3 Extensions locally</description>
@@ -57,6 +57,11 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>com.infor.m3</groupId>
+      <artifactId>xtendm3-sdk</artifactId>
+      <version>0.18.4-SNAPSHOT</version>
+    </dependency>
     <dependency>
       <groupId>org.jboss.forge.roaster</groupId>
       <artifactId>roaster-api</artifactId>

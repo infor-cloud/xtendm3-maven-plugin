@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ExtensionSourceUtils {
+
   public ExtensionType resolveExtensionType(JavaClassSource source) throws MojoFailureException {
     String superType = source.getSuperType();
     Optional<ExtensionType> type = ExtensionType.resolveByType(superType);
@@ -36,7 +37,7 @@ public class ExtensionSourceUtils {
     List<ApiMetadata> apisMetadata = metadata.getApis();
     for (ApiMetadata apiMetadata : apisMetadata) {
       for (TransactionExtensionMetadata transactionExtensionMetadata : apiMetadata.getTransactions()) {
-        if (transactionExtensionMetadata.getName().equals(extensionName)) {
+        if (((apiMetadata.getName() + "-" + transactionExtensionMetadata.getName())).equals(extensionName)) {
           transactionExtensionMetadata.setProgram(apiMetadata.getName());
           return transactionExtensionMetadata;
         }
@@ -67,10 +68,11 @@ public class ExtensionSourceUtils {
     throw new MojoFailureException("Code will not reach here");
   }
 
-  public UtilityMetadata getUtilityMetadata(XtendM3Metadata metadata, String utilityName) throws MojoFailureException {
-    for (UtilityMetadata utilityMetadata : metadata.getUtilities()) {
-      if (utilityMetadata.getName().equals(utilityName)) {
-        return utilityMetadata;
+  public UtilityExtensionMetadata getUtilityExtensionMetadata(XtendM3Metadata metadata, String utilityName) throws MojoFailureException {
+    utilityName = utilityName.endsWith(".groovy") ? utilityName.substring(0, utilityName.indexOf(".groovy")) : utilityName;
+    for (UtilityExtensionMetadata utilityExtensionMetadata : metadata.getUtilities()) {
+      if (utilityExtensionMetadata.getName().equals(utilityName)) {
+        return utilityExtensionMetadata;
       }
     }
     AssertionUtils.getInstance().fail(ErrorCode.METADATA_MISSING, "utility", utilityName);

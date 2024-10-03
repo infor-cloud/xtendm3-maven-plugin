@@ -21,4 +21,5 @@ public class ExtMITransaction {
   private List<ExtMIField> outputFields;
   private List<ExtMIField> inputFields;
   @Singular private Set<String> utilities;
+  private String market;
 }
