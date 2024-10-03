@@ -58,6 +58,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.infor.m3</groupId>
+      <artifactId>xtendm3-sdk</artifactId>
+      <version>0.18.4-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>org.jboss.forge.roaster</groupId>
       <artifactId>roaster-api</artifactId>
       <version>${version.roaster}</version>

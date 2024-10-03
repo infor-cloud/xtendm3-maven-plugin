@@ -106,6 +106,9 @@ public class BasicSecurityRuleSet {
     allowedApiInjections.add("MIAPI");
     allowedApiInjections.add("TextFilesAPI");
     allowedApiInjections.add("TransactionAPI");
+    allowedApiInjections.add("MessageAPI");
+    allowedApiInjections.add("BatchAPI");
+    allowedApiInjections.add("ExceptionAPI");
     return allowedApiInjections;
   }
 
