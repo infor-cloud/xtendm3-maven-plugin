@@ -114,7 +114,6 @@ public class ExtensionExporter {
     Map<String, String> content = extensions.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> gson.toJson(e.getValue())));
     String target = abstractXtendM3Mojo.getTargetDirectory();
     String parent = "exported";
-    //logger.get().debug(String.format("content is %s", content.toString()));
     for (Map.Entry<String, String> entry : content.entrySet()) {
       File file = Paths.get(target, parent, entry.getKey() + ".json").toFile();
       logger.get().info(String.format("writing %s", file.getPath()));
